@@ -30,7 +30,7 @@ class Obfucode {
 	get __parentObject() {
 		return ((this._config.platform || "node") == "browser") ? "this" : "global";
 	}
-	
+
 	constructor(config: any = {}) {
 		this._config = config;
 	}
