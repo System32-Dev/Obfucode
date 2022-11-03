@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../lib/index.ts"],
+  "sourcesContent": ["import { Obfucode } from './src/obfucode';\nexport default Obfucode;\nexport { Obfucode }"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA,sBAAyB;AACzB,IAAO,cAAQ;",
+  "names": []
+}
