@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../lib/types/index.d.ts"],
+  "sourcesContent": ["export type Obfucode = {\n\tobfuscate: any\n};"],
+  "mappings": ";;AAAA;",
+  "names": []
+}

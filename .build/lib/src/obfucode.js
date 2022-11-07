@@ -26,7 +26,23 @@ __export(exports, {
 });
 var import_meriyah = __toModule(require("meriyah"));
 var import_esotope_hammerhead = __toModule(require("esotope-hammerhead"));
+var import_node_crypto = __toModule(require("node:crypto"));
 class Obfucode {
+  constructor(config = {}) {
+    this.__funcRep = {};
+    this.__varsRep = {};
+    this.__config = { platform: "node" };
+    this.__hex = (0, import_node_crypto.randomBytes)(8).toString("hex");
+    this._config = config;
+  }
+  get __tempConfig() {
+    return {
+      decoderHex: "__" + this.__hex
+    };
+  }
+  get __inject() {
+    return `const ${this.__tempConfig.decoderHex}=((encoded) => { return encoded.split(/\u3164/g).map((_item) => { return _item == "" ? _item : String.fromCharCode(_item) }).join("") });`;
+  }
   get __functions() {
     return this.__funcRep;
   }
@@ -34,10 +50,10 @@ class Obfucode {
     this.__funcRep = val;
   }
   get __variables() {
-    return this.__funcRep;
+    return this.__varsRep;
   }
   set __variables(val) {
-    this.__funcRep = val;
+    this.__varsRep = val;
   }
   get _config() {
     return this.__config;
@@ -48,11 +64,19 @@ class Obfucode {
   get __parentObject() {
     return (this._config.platform || "node") == "browser" ? "this" : "global";
   }
-  constructor(config = {}) {
-    this._config = config;
+  __textData(target, prefix = "") {
+    var code = [];
+    target.split("").forEach((_char) => {
+      code.push(prefix + _char.codePointAt(0).toString(16));
+    });
+    return code;
   }
-  stringHandler(value) {
-    return (0, import_meriyah.parseScript)(`atob("${btoa(value)}");`).body[0].expression;
+  stringHandler(str) {
+    var result = "";
+    for (let i = 0; i < str.length; i++) {
+      result += "\u3164" + str[i].charCodeAt(0);
+    }
+    return (0, import_meriyah.parseScript)(`${this.__tempConfig.decoderHex}("${result}")`).body[0].expression;
   }
   hexGen(size = 7) {
     return [...Array(size)].map((_c) => "abcdefghijklmnopqrstuvwxyz"[Math.round(Math.random() * 25)][Math.round(Math.random() * 2) == 1 ? "toUpperCase" : "toLowerCase"]()).join("");
@@ -63,7 +87,11 @@ class Obfucode {
       node = this.stringHandler(node.value);
     if (type == "Identifier") {
       if (typeof this.__variables[node.name] === "undefined") {
-        node = (0, import_meriyah.parseScript)(`${this.__parentObject}[atob("${btoa(node.name)}")]`).body[0].expression;
+        var _id = btoa(node.name);
+        this.__variables[node.name] = {
+          name: _id
+        };
+        node = (0, import_meriyah.parseScript)(`${this.__parentObject}[atob("${_id}")]`).body[0].expression;
       } else {
         node.name = this.__variables[node.name].name;
       }
@@ -118,7 +146,7 @@ class Obfucode {
       node.declarations.forEach((_declarator) => _declarator = this.componentConversion(_declarator));
     if (type == "VariableDeclarator") {
       this.__variables[node.id.name] = {
-        name: this.hexGen()
+        name: btoa(node.id.name).replaceAll(/=/g, "")
       };
       node.id.name = this.__variables[node.id.name].name;
       var _props = this.componentConversion(node.init);
@@ -147,7 +175,7 @@ class Obfucode {
   obfuscate(source) {
     this.__functions = {};
     const _parsed = (0, import_meriyah.parseScript)(source);
-    var _SCRIPT = "";
+    var _SCRIPT = this.__inject;
     _parsed.body.forEach((component) => {
       _SCRIPT += (0, import_esotope_hammerhead.generate)({
         type: "Program",

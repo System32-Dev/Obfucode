@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../lib/index.ts"],
-  "sourcesContent": ["import { Obfucode } from './src/obfucode';\nexport default Obfucode;\nexport { Obfucode }"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA,sBAAyB;AACzB,IAAO,cAAQ;",
+  "sourcesContent": ["#!/usr/bin/env node\nimport { Obfucode } from './src/obfucode';\nimport __cli from './cli';\n__cli();\nexport default require('./src/obfucode');"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAEA,iBAAkB;AAClB;AACA,IAAO,cAAQ,QAAQ;",
   "names": []
 }

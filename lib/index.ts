@@ -1,3 +1,5 @@
+#!/usr/bin/env node
 import { Obfucode } from './src/obfucode';
-export default Obfucode;
-export { Obfucode }
+import __cli from './cli';
+__cli();
+export default require('./src/obfucode');

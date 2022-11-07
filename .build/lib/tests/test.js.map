@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../lib/tests/test.ts"],
+  "sourcesContent": ["import { Obfucode } from '../src/obfucode';\nimport { writeFileSync } from 'fs';\n\nconst _obfoc = new Obfucode({\n\tplatform: \"node\",\n})\n\nvar _obfuscated = _obfoc.obfuscate(`\nconsole.log(\"Hello, World!\");\n`)\n\nconsole.log(_obfuscated);\n\neval(_obfuscated);"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA,sBAAyB;AAGzB,MAAM,SAAS,IAAI,yBAAS;AAAA,EAC3B,UAAU;AAAA;AAGX,IAAI,cAAc,OAAO,UAAU;AAAA;AAAA;AAInC,QAAQ,IAAI;AAEZ,KAAK;",
+  "names": []
+}

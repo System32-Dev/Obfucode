@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -22,13 +23,11 @@ var __toModule = (module2) => {
   return __reExport(__markAsModule(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", module2 && module2.__esModule && "default" in module2 ? { get: () => module2.default, enumerable: true } : { value: module2, enumerable: true })), module2);
 };
 __export(exports, {
-  Obfucode: () => import_obfucode.Obfucode,
   default: () => lib_default
 });
-var import_obfucode = __toModule(require("./src/obfucode"));
-var lib_default = import_obfucode.Obfucode;
+var import_cli = __toModule(require("./cli"));
+(0, import_cli.default)();
+var lib_default = require("./src/obfucode");
 // Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  Obfucode
-});
+0 && (module.exports = {});
 //# sourceMappingURL=index.js.map
